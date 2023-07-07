@@ -1,0 +1,248 @@
+<!-- Page Wrapper -->
+<div id="wrapper">
+   <!-- Content Wrapper -->
+   <!--Para que aparezca el menú, colocar la siguiente línea en los componentes donde se necesite-->
+   <app-menu></app-menu>
+   <div id="content-wrapper" class="d-flex flex-column">
+      <!-- Main Content -->
+      <div id="content">
+         <!-- Topbar -->
+         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+            <!-- Sidebar Toggle (Topbar) -->
+            <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+               <i class="fa fa-bars"></i>
+            </button>
+            <!-- Topbar Navbar -->
+            <ul class="navbar-nav ml-auto">
+               <div class="topbar-divider d-none d-sm-block"></div>
+               <!-- Nav Item - User Information -->
+               <li class="nav-item dropdown no-arrow">
+                  <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user}}</span>
+                  <img alt="" class="img-profile rounded-circle" src="img/undraw_profile.svg">
+               </li>
+            </ul>
+         </nav>
+         <!-- End of Topbar -->
+         <!-- Begin Page Content -->
+         <div class="container-fluid">
+            <!-- Content Row -->
+            <div class="row">
+               <!--AQUI EL CONTENIDO CENTRAL-->
+               <div class="container-fluid mt-4">
+                  <div class="row">
+                     <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                           <li class="breadcrumb-item"><a href="/user">Inicio</a></li>
+                           <li class="breadcrumb-item active" aria-current="page">Usuarios</li>
+                        </ol>
+                     </nav>
+                     <div class="col-md-12 d-flex justify-content-center">
+                        <div class="page-header">
+                           <h1>
+                              <small>Usuarios</small>
+                           </h1>
+                        </div>
+                     </div>
+                  </div>
+                  <!--CONTENIDO-->
+                  <div class="row">
+                     <div class="col-md-10">
+                        <div class="">
+                           <!-- Button trigger modal -->
+                           <!-- Registrar User -->
+                           <!-- Button trigger modal -->
+                           <button type="button" class="btn btn-primary" data-toggle="modal"
+                              data-target="#nuevoUserModal">
+                              Registrar Usuarios
+                           </button>
+                           <table class="table table-dark">
+                              <thead>
+                                 <tr>
+                                    <th scope="col">Usuario</th>
+                                    <th scope="col">Correo</th>
+                                    <th scope="col">CC</th>
+                                    <th scope="col">Nombre</th>
+                                    <th scope="col">VHUR</th>
+                                    <th scope="col">Telefono</th>
+                                    <th scope="col">Sexo</th>
+                                    <th scope="col">Fecha Vinculación</th>
+                                    <th scope="col">Rol</th>
+                                    <th scope="col">Editar</th>
+                                    <th scope="col">Eliminar</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr *ngFor="let user of userList">
+                                    <td>{{user.usuario}}</td>
+                                    <td>{{user.correo}}</td>
+                                    <td>{{user.cc}}</td>
+                                    <td>{{user.nombre}}</td>
+                                    <td>{{user.vhur}}</td>
+                                    <td>{{user.telefono}}</td>
+                                    <td>{{user.sexo}}</td>
+                                    <td>{{user.fecha_vinculacion}}</td>
+                                    <td [ngPlural]="user.rol">
+                                       <ng-template ngPluralCase="1">Supervisor</ng-template>
+                                       <ng-template ngPluralCase="2">Agente</ng-template>
+                                       <ng-template ngPluralCase="3">Administrador</ng-template>
+
+                                    </td>
+                                    <td><button type="button" class="btn btn-primary"
+                                          (click)="toggleEditUser(user._id)">
+                                          <i class="bi bi-pencil-square"></i>
+                                       </button>
+                                    </td>
+                                    <td><button type="button" class="btn btn-primary"
+                                          (click)="deleteUserEntry(user._id)">
+                                          <i class="bi bi-trash"></i>
+                                       </button>
+                                    </td>
+                                 </tr>
+                              </tbody>
+                           </table>
+                           <!-- Editar  ANimal -->
+                           <form *ngIf="editableUser" (ngSubmit)="updateUserEntry()" [formGroup]="userForm">
+                              <div class="modal-body">
+                                 <div class="form-group">
+                                    <label for="editUsuario">Usuario</label>
+                                    <input type="text" class="form-control" id="editUsuario" formControlName="usuario"
+                                       required placeholder="Ingresar usuario">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="editCorreo">Correo</label>
+                                    <input type="text" class="form-control" id="editCorreo" formControlName="correo"
+                                       required placeholder="Ingresar correo">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="editClave">Clave</label>
+                                    <input type="password" class="form-control" id="editClave" formControlName="clave"
+                                       required placeholder="Ingresar clave">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="editCc">CC</label>
+                                    <input type="number" class="form-control" id="editCc" formControlName="cc" required
+                                       placeholder="Ingresar cc">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="editNombre">Nombre</label>
+                                    <input type="text" class="form-control" id="editNombre" formControlName="nombre"
+                                       required placeholder="Ingresar nombre">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="editVhur">VHUR</label>
+                                    <input type="number" class="form-control" id="editVhur" formControlName="vhur"
+                                       placeholder="Ingresar vhur">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="editTelefono">Telefono</label>
+                                    <input type="number" class="form-control" id="editTelefono"
+                                       formControlName="telefono" placeholder="Ingresar telefono">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="editSexo">Sexo</label>
+                                    <input type="text" class="form-control" id="editSexo" formControlName="sexo"
+                                       placeholder="Ingresar sexo">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="editFecha">Fecha Vinculación</label>
+                                    <input type="date" class="form-control" id="editFecha"
+                                       formControlName="fecha_vinculacion" placeholder="Ingresar fecha">
+                                 </div>
+                                 <div class="form-group">
+                                    <label for="editRol">Rol</label>
+                                    <input type="number" class="form-control" id="editRol" formControlName="rol"
+                                       placeholder="Ingresar rol">
+                                 </div>
+                              </div>
+                              <div class="modal-footer">
+                                 <button type="submit" class="btn btn-primary">Guardar</button>
+                              </div>
+                           </form>
+                           <!-- Modal nuevo ANimal -->
+                           <div class="modal fade" id="nuevoUserModal" tabindex="-1" role="dialog"
+                              aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog" role="document">
+                                 <div class="modal-content">
+                                    <div class="modal-header">
+                                       <h5 class="modal-title" id="exampleModalLabel">Nuevo User</h5>
+                                       <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                       </button>
+                                    </div>
+                                    <form (ngSubmit)="newUserEntry()" [formGroup]="userForm">
+                                       <div class="form-group">
+                                          <label for="inputUsuario">Usuario</label>
+                                          <input type="text" class="form-control" id="inputUsuario"
+                                             formControlName="usuario" required placeholder="Ingresar usuario">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="inputCorreo">Correo</label>
+                                          <input type="text" class="form-control" id="inputCorreo"
+                                             formControlName="correo" required placeholder="Ingresar correo">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="inputClave">Clave</label>
+                                          <input type="password" class="form-control" id="inputClave"
+                                             formControlName="clave" required placeholder="Ingresar clave">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="inputCc">CC</label>
+                                          <input type="number" class="form-control" id="inputCc" formControlName="cc"
+                                             required placeholder="Ingresar cc">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="inputNombre">Nombre</label>
+                                          <input type="text" class="form-control" id="inputNombre"
+                                             formControlName="nombre" required placeholder="Ingresar nombre">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="inputVhur">VHUR</label>
+                                          <input type="number" class="form-control" id="inputVhur"
+                                             formControlName="vhur" placeholder="Ingresar vhur">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="inputTelefono">Telefono</label>
+                                          <input type="number" class="form-control" id="inputTelefono"
+                                             formControlName="telefono" placeholder="Ingresar telefono">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="inputSexo">Sexo</label>
+                                          <input type="text" class="form-control" id="inputSexo" formControlName="sexo"
+                                             placeholder="Ingresar sexo">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="inputFecha">Fecha Vinculación</label>
+                                          <input type="date" class="form-control" id="inputFecha"
+                                             formControlName="fecha_vinculacion" placeholder="Ingresar fecha">
+                                       </div>
+                                       <div class="form-group">
+                                          <label for="inputRol">Rol</label>
+                                          <input type="number" class="form-control" id="inputRol" formControlName="rol"
+                                             placeholder="Ingresar rol">
+                                       </div>
+                                       <div class="modal-footer">
+                                          <button type="submit" class="btn btn-primary">Guardar</button>
+                                       </div>
+                                    </form>
+                                 </div>
+                              </div>
+                           </div>
+                           <!--Termina el CONTENIDO CENTRAL-->
+                        </div>
+                     </div>
+                     <!-- /.container-fluid -->
+                  </div>
+                  <!-- End of Main Content -->
+                  <!-- Footer -->
+                  <footer class="sticky-footer bg-white">
+                     <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                           <span>Copyright &copy; Your Website 2021</span>
+                        </div>
+                     </div>
+                  </footer>
+                  <!-- End of Footer -->
+               </div>
+               <!-- End of Content Wrapper -->
+            </div>
+            <!-- End of Page Wrapper -->

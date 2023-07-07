@@ -1,0 +1,197 @@
+<!-- Page Wrapper -->
+<div id="wrapper">
+    <!-- Content Wrapper -->
+    <!--Para que aparezca el menú, colocar la siguiente línea en los componentes donde se necesite-->
+    <app-menu></app-menu>
+    <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+    <!-- Topbar -->
+    <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+       <!-- Sidebar Toggle (Topbar) -->
+       <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+       <i class="fa fa-bars"></i>
+       </button>
+       <!-- Topbar Navbar -->
+       <ul class="navbar-nav ml-auto">
+          <div class="topbar-divider d-none d-sm-block"></div>
+          <!-- Nav Item - User Information -->
+          <li class="nav-item dropdown no-arrow">
+             <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user}}</span>
+             <img alt="" class="img-profile rounded-circle" src="img/undraw_profile.svg">
+          </li>
+       </ul>
+    </nav>
+    <!-- End of Topbar -->
+    <!-- Begin Page Content -->
+    <div class="container-fluid">
+    <!-- Content Row -->
+    <div class="row">
+       <!--AQUI EL CONTENIDO CENTRAL-->
+       <div class="container-fluid mt-4">
+          <div class="row">
+             <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                   <li class="breadcrumb-item"><a href="/animal">Inicio</a></li>
+                   <li class="breadcrumb-item active" aria-current="page">Animales</li>
+                </ol>
+             </nav>
+             <div class="col-md-12 d-flex justify-content-center">
+                <div class="page-header">
+                   <h1>
+                      <small>Animales</small>
+                   </h1>
+                </div>
+             </div>
+          </div>
+          <!--CONTENIDO-->
+          <div class="row">
+             <div class="col-md-10">
+                <div class="">
+                   <!-- Button trigger modal -->
+                   <!-- Registrar Animal -->
+                   <!-- Button trigger modal -->
+                   <button type="button" class="btn btn-primary" data-toggle="modal"
+                      data-target="#nuevoAnimalModal">
+                   Registrar Animal
+                   </button>
+                   <table class="table table-dark">
+                      <thead>
+                         <tr>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Edad</th>
+                            <th scope="col">Tipo</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Codigo</th>
+                            <th scope="col">Editar</th>
+                            <th scope="col">Eliminar</th>
+                         </tr>
+                      </thead>
+                      <tbody>
+                         <tr *ngFor="let animal of animalList">
+                            <td>{{animal.nombre}}</td>
+                            <td>{{animal.edad}}</td>
+                            <td>{{animal.tipo}}</td>
+                            <td>{{animal.fecha}}</td>
+                            <td>{{animal.codigo}}</td>
+                            <td><button type="button" class="btn btn-primary"
+                               (click)="toggleEditAnimal(animal._id)">
+                               <i class="bi bi-pencil-square"></i>
+                               </button>
+                            </td>
+                            <td><button type="button" class="btn btn-primary"
+                               (click)="deleteAnimalEntry(animal._id)">
+                               <i class="bi bi-trash"></i>
+                               </button>
+                            </td>
+                         </tr>
+                      </tbody>
+                   </table>
+                   <!-- Editar  ANimal -->
+                   <form *ngIf="editableAnimal" (ngSubmit)="updateAnimalEntry()"
+                   [formGroup]="animalForm">
+                   <div class="modal-body">
+                      <div class="form-group">
+                         <label for="editNombre">Nombre</label>
+                         <input type="text" class="form-control" id="editNombre"
+                            formControlName="nombre" aria-describedby="emailHelp" required
+                            placeholder="Ingresar nombre">
+                      </div>
+                      <div class="form-group">
+                         <label for="editTipo">Tipo</label>
+                         <input type="text" class="form-control" id="editTipo"
+                            formControlName="tipo" aria-describedby="emailHelp" required
+                            placeholder="Ingresar tipo">
+                      </div>
+                      <div class="form-group">
+                         <label for="editEdad">Edad</label>
+                         <input type="number" class="form-control" id="editEdad"
+                            formControlName="edad" aria-describedby="emailHelp" required
+                            placeholder="Ingresar edad">
+                      </div>
+                      <div class="form-group">
+                         <label for="editFecha">Fecha</label>
+                         <input type="date" class="form-control" id="editFecha"
+                            formControlName="fecha" aria-describedby="emailHelp" required
+                            placeholder="Ingresar fecha">
+                      </div>
+                      <div class="form-group">
+                         <label for="editCodigo">Codigo</label>
+                         <input type="number" class="form-control" id="editCodigo"
+                            formControlName="codigo" aria-describedby="emailHelp"
+                            placeholder="Ingresar codigo">
+                      </div>
+                   </div>
+                   <div class="modal-footer">
+                      <button type="submit" class="btn btn-primary">Guardar</button>
+                   </div>
+                   </form>
+                   <!-- Modal nuevo ANimal -->
+                   <div class="modal fade" id="nuevoAnimalModal" tabindex="-1" role="dialog"
+                      aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                         <div class="modal-content">
+                            <div class="modal-header">
+                               <h5 class="modal-title" id="exampleModalLabel">Nuevo Animal</h5>
+                               <button type="button" class="close" data-dismiss="modal"
+                                  aria-label="Close">
+                               <span aria-hidden="true">&times;</span>
+                               </button>
+                            </div>
+                            <form (ngSubmit)="newAnimalEntry()" [formGroup]="animalForm">
+                            <div class="form-group">
+                               <label for="inputNombre">Nombre</label>
+                               <input type="text" class="form-control" id="inputNombre"
+                                  formControlName="nombre" aria-describedby="emailHelp"
+                                  required placeholder="Ingresar nombre">
+                            </div>
+                            <div class="form-group">
+                               <label for="inputTipo">Tipo</label>
+                               <input type="text" class="form-control" id="inputTipo"
+                                  formControlName="tipo" aria-describedby="emailHelp" required
+                                  placeholder="Ingresar tipo">
+                            </div>
+                            <div class="form-group">
+                               <label for="inputEdad">Edad</label>
+                               <input type="number" class="form-control" id="inputEdad"
+                                  formControlName="edad" aria-describedby="emailHelp" required
+                                  placeholder="Ingresar edad">
+                            </div>
+                            <div class="form-group">
+                               <label for="inputFecha">Fecha</label>
+                               <input type="date" class="form-control" id="inputFecha"
+                                  formControlName="fecha" aria-describedby="emailHelp"
+                                  required placeholder="Ingresar fecha">
+                            </div>
+                            <div class="form-group">
+                               <label for="inputCodigo">Codigo</label>
+                               <input type="number" class="form-control" id="inputCodigo"
+                                  formControlName="codigo" aria-describedby="emailHelp"
+                                  placeholder="Ingresar codigo">
+                            </div>
+                            <div class="modal-footer">
+                               <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                            </form>
+                         </div>
+                      </div>
+                   </div>
+                   <!--Termina el CONTENIDO CENTRAL-->
+                </div>
+             </div>
+             <!-- /.container-fluid -->
+          </div>
+          <!-- End of Main Content -->
+          <!-- Footer -->
+          <footer class="sticky-footer bg-white">
+             <div class="container my-auto">
+                <div class="copyright text-center my-auto">
+                   <span>Copyright &copy; Your Website 2021</span>
+                </div>
+             </div>
+          </footer>
+          <!-- End of Footer -->
+       </div>
+       <!-- End of Content Wrapper -->
+    </div>
+    <!-- End of Page Wrapper -->

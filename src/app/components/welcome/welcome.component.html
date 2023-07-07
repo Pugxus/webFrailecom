@@ -1,0 +1,125 @@
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+    <!-- Content Wrapper -->
+    <!--Para que aparezca el menú, colocar la siguiente línea en los componentes donde se necesite-->
+
+    <app-menu></app-menu>
+    <div id="content-wrapper" class="d-flex flex-column">
+        <!-- Main Content -->
+        <div id="content">
+            <!-- Topbar -->
+
+            <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <!-- Sidebar Toggle (Topbar) -->
+
+                <button title="menú" type="button" name="" id="sidebarToggleTop"
+                    class="btn btn-link d-md-none rounded-circle mr-3">
+
+                    <i class="fa fa-bars"></i>
+
+                </button>
+                <!-- Topbar Navbar -->
+
+                <ul class="navbar-nav ml-auto">
+
+                    <div class="topbar-divider d-none d-sm-block"></div>
+
+
+
+
+                    <!-- Nav Item - User Information -->
+
+                    <li class="nav-item dropdown no-arrow">
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{user}}</span>
+
+                        <img alt="" class="img-profile rounded-circle" src="img/undraw_profile.svg">
+                    </li>
+
+                </ul>
+
+            </nav>
+
+            <!-- End of Topbar -->
+            <!-- Begin Page Content -->
+
+            <div class="container-fluid">
+                <!-- Content Row -->
+                <div class="row">
+                    <!--AQUI EL CONTENIDO CENTRAL-->
+
+                    <div class="container-fluid mt-4">
+
+                        <div class="row">
+
+                            <nav aria-label="breadcrumb">
+
+                                <ol class="breadcrumb">
+
+                                    <li class="breadcrumb-item"><a href="/animal">Inicio</a></li>
+
+                                    <li class="breadcrumb-item active" aria-current="page">Animales</li>
+
+                                </ol>
+
+                            </nav>
+
+                            <div class="col-md-12 d-flex justify-content-center">
+
+                                <div class="page-header">
+
+                                    <h1>
+
+                                        <small>Animales</small>
+
+                                    </h1>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!--CONTENIDO-->
+
+                        <div class="row">
+
+                            <div class="col-md-10">
+
+                                <div class="">
+                                    <p>Bienvendio {{user}}</p>
+                                    <!--Termina el CONTENIDO CENTRAL-->
+
+                                </div>
+
+                            </div>
+
+                            <!-- /.container-fluid -->
+                        </div>
+
+                        <!-- End of Main Content -->
+
+                        <!-- Footer -->
+
+                        <footer class="sticky-footer bg-white">
+
+                            <div class="container my-auto">
+
+                                <div class="copyright text-center my-auto">
+
+                                    <span>Copyright &copy; Your Website 2021</span>
+
+                                </div>
+
+                            </div>
+
+                        </footer>
+
+                        <!-- End of Footer -->
+
+                    </div>
+
+                    <!-- End of Content Wrapper -->
+                </div>
+
+                <!-- End of Page Wrapper -->
